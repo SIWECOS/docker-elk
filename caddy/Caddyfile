@@ -1,0 +1,12 @@
+0.0.0.0:80 {
+
+    # ipfilter /api/v2/scan/finished {
+    #     rule allow
+    #     ip 127.0.0.1
+    #     blockpage /srv/blockpage.html
+    # }
+
+    proxy / kibana:5601 {
+        transparent
+    }
+}
