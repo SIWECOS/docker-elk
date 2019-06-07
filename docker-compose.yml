@@ -7,6 +7,10 @@ services:
     ports:
       - 80:80
       - 443:443
+    volumes:
+      - ./caddy/Caddyfile:/etc/Caddyfile:ro
+      - caddy_certs:/root/.caddy
+      - ./caddy/blockpage.html:/srv/blockpage.html:ro
 
   elasticsearch:
     build:
@@ -21,8 +25,6 @@ services:
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
       ELASTIC_PASSWORD: changeme
-    networks:
-      - elk
 
   logstash:
     build:
@@ -37,8 +39,6 @@ services:
       - "9600:9600"
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-    networks:
-      - elk
     depends_on:
       - elasticsearch
 
@@ -51,12 +51,8 @@ services:
       - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
     ports:
       - "5601:5601"
-    networks:
-      - elk
     depends_on:
       - elasticsearch
 
-networks:
-
-  elk:
-    driver: bridge
+volumes:
+  caddy_certs:
