@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
   logspout:
@@ -7,10 +7,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
-      ROUTE_URIS: logstash://logstash:5000
+      ROUTE_URIS: logstash+tcp://logstash:5000
       LOGSTASH_TAGS: docker-elk
-    networks:
-      - elk
-    depends_on:
-      - logstash
     restart: on-failure
