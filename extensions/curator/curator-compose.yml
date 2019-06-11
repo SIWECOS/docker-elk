@@ -11,7 +11,7 @@ services:
       CRON: 0 0 * * *
       CONFIG_FILE: /usr/share/curator/config/curator.yml
       COMMAND: /usr/share/curator/config/delete_log_files_curator.yml
-      UNIT_COUNT: 2
+      UNIT_COUNT: 30
     networks:
       - elk
     depends_on:
