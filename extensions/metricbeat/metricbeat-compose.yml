@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:7.1.1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /proc:/hostfs/proc:ro
+      - /:/hostfs:ro
+      - ./metricbeat.docker.yml:/usr/share/metricbeat/metricbeat.yml:ro
+    command: setup -E setup.kibana.host=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
+    restart: on-failure
