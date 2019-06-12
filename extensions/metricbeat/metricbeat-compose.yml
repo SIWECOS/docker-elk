@@ -10,9 +10,11 @@ services:
       - /proc:/hostfs/proc:ro
       - /:/hostfs:ro
       - ./metricbeat.docker.yml:/usr/share/metricbeat/metricbeat.yml:ro
-    # command: setup -E setup.kibana.host=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
     environment:
       ELASTICSEARCH_HOSTS: elasticsearch:9200
       ELASTICSEARCH_USERNAME: elastic
       ELASTICSEARCH_PASSWORD: changeme
     restart: on-failure
+    network_mode: host
+    command:
+      - "-system.hostfs=/hostfs"
