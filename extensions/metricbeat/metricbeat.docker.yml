@@ -7,29 +7,6 @@ metricbeat.config:
     # Reload module configs as they change:
     reload.enabled: false
 
-  output.elasticsearch:
-    hosts: ["${ELASTICSEARCH_HOSTS:elasticsearch:9200}"]
-    username: "${ELASTICSEARCH_USERNAME:}"
-    password: "${ELASTICSEARCH_PASSWORD:}"
-    index: "${ELASTICSEARCH_INDEX:customname}-%{[agent.version]}-%{+yyyy.MM.dd}"
-
-  setup.template:
-    name: "${ELASTICSEARCH_INDEX:customname}"
-    pattern: "${ELASTICSEARCH_INDEX:customname}-*"
-
-  setup.kibana:
-    host: "${ELASTICSEARCH_HOSTS:}"
-    username: "${ELASTICSEARCH_USERNAME:}"
-    password: "${ELASTICSEARCH_PASSWORD:}"
-
-  setup.dashboards:
-    enabled: true
-    index: "${ELASTICSEARCH_INDEX:customname}-*"
-    retry:
-      enabled: true
-      interval: 15s
-
-
 metricbeat.autodiscover:
   providers:
     - type: docker
@@ -47,9 +24,27 @@ metricbeat.modules:
     - "memory"
     - "network"
   hosts: ["unix:///var/run/docker.sock"]
-  period: 10s
+  period: 15s
   enabled: true
 
-processors:
-  - add_cloud_metadata: ~
+output.elasticsearch:
+    hosts: ["${ELASTICSEARCH_HOSTS:elasticsearch:9200}"]
+    username: "${ELASTICSEARCH_USERNAME:}"
+    password: "${ELASTICSEARCH_PASSWORD:}"
+    index: "${ELASTICSEARCH_INDEX:customname}-%{[agent.version]}-%{+yyyy.MM.dd}"
 
+setup.template:
+  name: "${ELASTICSEARCH_INDEX:customname}"
+  pattern: "${ELASTICSEARCH_INDEX:customname}-*"
+
+setup.kibana:
+  host: "${ELASTICSEARCH_HOSTS:}"
+  username: "${ELASTICSEARCH_USERNAME:}"
+  password: "${ELASTICSEARCH_PASSWORD:}"
+
+setup.dashboards:
+  enabled: true
+  index: "${ELASTICSEARCH_INDEX:customname}-*"
+  retry:
+    enabled: true
+    interval: 15s
