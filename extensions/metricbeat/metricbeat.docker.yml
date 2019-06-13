@@ -28,23 +28,20 @@ metricbeat.modules:
   enabled: true
 
 output.elasticsearch:
-    hosts: ["${ELASTICSEARCH_HOSTS:elasticsearch:9200}"]
-    username: "${ELASTICSEARCH_USERNAME:}"
-    password: "${ELASTICSEARCH_PASSWORD:}"
-    index: "${ELASTICSEARCH_INDEX:customname}-%{[agent.version]}-%{+yyyy.MM.dd}"
+  hosts: ["${ELASTICSEARCH_HOSTS:elasticsearch:9200}"]
+  username: "${ELASTICSEARCH_USERNAME:}"
+  password: "${ELASTICSEARCH_PASSWORD:}"
+  index: "${ELASTICSEARCH_INDEX:customname}-%{[agent.version]}-%{+yyyy.MM.dd}"
 
-setup.template:
-  name: "${ELASTICSEARCH_INDEX:customname}"
-  pattern: "${ELASTICSEARCH_INDEX:customname}-*"
+setup.template.name: "${ELASTICSEARCH_INDEX:customname}"
+setup.template.pattern: "${ELASTICSEARCH_INDEX:customname}-*"
 
 setup.kibana:
   host: "${ELASTICSEARCH_HOSTS:}"
   username: "${ELASTICSEARCH_USERNAME:}"
   password: "${ELASTICSEARCH_PASSWORD:}"
 
-setup.dashboards:
-  enabled: true
-  index: "${ELASTICSEARCH_INDEX:customname}-*"
-  retry:
-    enabled: true
-    interval: 15s
+setup.dashboards.enabled: true
+setup.dashboards.index: "${ELASTICSEARCH_INDEX:customname}-*"
+setup.dashboards.retry.enabled: true
+setup.dashboards.retry.interval: 15s
