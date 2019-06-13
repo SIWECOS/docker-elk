@@ -1,3 +1,6 @@
+# FULL FILE REFERENCE:
+# https://github.com/elastic/beats/blob/master/metricbeat/metricbeat.reference.yml
+
 metricbeat.config:
   modules:
     path: ${path.config}/modules.d/*.yml
@@ -28,9 +31,9 @@ processors:
   - add_cloud_metadata: ~
 
 output.elasticsearch:
-  hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
-  username: '${ELASTICSEARCH_USERNAME:}'
-  password: '${ELASTICSEARCH_PASSWORD:}'
+  hosts: ["${ELASTICSEARCH_HOSTS:elasticsearch:9200}"]
+  username: "${ELASTICSEARCH_USERNAME:}"
+  password: "${ELASTICSEARCH_PASSWORD:}"
   index: "${ELASTICSEARCH_INDEX:customname}-%{[agent.version]}-%{+yyyy.MM.dd}"
 
 setup.template:
@@ -39,7 +42,12 @@ setup.template:
 
 setup.kibana:
   host: "${ELASTICSEARCH_HOSTS:}"
-  username: '${ELASTICSEARCH_USERNAME:}'
-  password: '${ELASTICSEARCH_PASSWORD:}'
+  username: "${ELASTICSEARCH_USERNAME:}"
+  password: "${ELASTICSEARCH_PASSWORD:}"
 
-setup.dashboards.index: "${ELASTICSEARCH_INDEX:customname}-*"
+setup.dashboards:
+  enabled: false
+  index: "${ELASTICSEARCH_INDEX:customname}-*"
+  retry:
+    enabled: true
+    interval: 1s
