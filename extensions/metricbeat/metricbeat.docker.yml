@@ -37,4 +37,9 @@ setup.template:
   name: "${ELASTICSEARCH_INDEX:customname}"
   pattern: "${ELASTICSEARCH_INDEX:customname}-*"
 
+setup.kibana:
+  host: "${ELASTICSEARCH_HOSTS:}"
+  username: '${ELASTICSEARCH_USERNAME:}'
+  password: '${ELASTICSEARCH_PASSWORD:}'
+
 setup.dashboards.index: "${ELASTICSEARCH_INDEX:customname}-*"
