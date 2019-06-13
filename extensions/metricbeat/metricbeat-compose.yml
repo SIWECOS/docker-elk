@@ -17,4 +17,4 @@ services:
     restart: on-failure
     network_mode: host
     command:
-      - "-system.hostfs=/hostfs"
+      - "-system.hostfs=/hostfs --dashboards"
