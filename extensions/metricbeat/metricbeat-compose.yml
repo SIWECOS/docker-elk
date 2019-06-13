@@ -14,6 +14,7 @@ services:
       ELASTICSEARCH_HOSTS: elasticsearch:9200
       ELASTICSEARCH_USERNAME: elastic
       ELASTICSEARCH_PASSWORD: changeme
+      ELASTICSEARCH_INDEX: customname
     restart: on-failure
     network_mode: host
     command:

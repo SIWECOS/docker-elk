@@ -31,3 +31,10 @@ output.elasticsearch:
   hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
   username: '${ELASTICSEARCH_USERNAME:}'
   password: '${ELASTICSEARCH_PASSWORD:}'
+  index: "${ELASTICSEARCH_INDEX:customname}-%{[agent.version]}-%{+yyyy.MM.dd}"
+
+setup.template:
+  name: "${ELASTICSEARCH_INDEX:customname}"
+  pattern: "${ELASTICSEARCH_INDEX:customname}-*"
+
+setup.dashboards.index: "${ELASTICSEARCH_INDEX:customname}-*"
