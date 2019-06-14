@@ -5,6 +5,7 @@ ARG DEFAULT_PASSWORD
 FROM docker.elastic.co/elasticsearch/elasticsearch:${ELK_VERSION}
 
 # Set custom elasticseach password
+# https://stackoverflow.com/a/55599206/11215251
 RUN echo "<boot_password>" | bin/elasticsearch-keystore add -xf bootstrap.password
 
 # Add your elasticsearch plugins setup here
