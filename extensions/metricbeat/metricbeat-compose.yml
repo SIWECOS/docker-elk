@@ -2,7 +2,7 @@ version: '3'
 
 services:
   metricbeat:
-    image: docker.elastic.co/beats/metricbeat:7.1.1
+    image: docker.elastic.co/beats/metricbeat:${ELK_VERSION}
     user: root
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -14,7 +14,6 @@ services:
       ELASTICSEARCH_HOSTS: elasticsearch:9200
       ELASTICSEARCH_USERNAME: elastic
       ELASTICSEARCH_PASSWORD: changeme
-      ELASTICSEARCH_INDEX: customname
     restart: on-failure
     network_mode: host
     command:
