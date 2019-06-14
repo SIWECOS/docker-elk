@@ -6,14 +6,6 @@
     #     blockpage /srv/blockpage.html
     # }
 
-    proxy /logstash logstash:5000 {
-        transparent
-    }
-
-    proxy /elasticsearch elasticsearch:5000 {
-        transparent
-    }
-
     proxy / kibana:5601 {
         transparent
     }
