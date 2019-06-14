@@ -14,6 +14,7 @@ services:
       ELASTICSEARCH_HOSTS: elasticsearch:9200
       ELASTICSEARCH_USERNAME: elastic
       ELASTICSEARCH_PASSWORD: changeme
+      KIBANA_HOST: kibana:5601
     restart: on-failure
     network_mode: host
     command:

@@ -33,7 +33,7 @@ output.elasticsearch:
   password: "${ELASTICSEARCH_PASSWORD:}"
 
 setup.kibana:
-  host: "${ELASTICSEARCH_HOSTS:}"
+  host: "${KIBANA_HOST:}"
   username: "${ELASTICSEARCH_USERNAME:}"
   password: "${ELASTICSEARCH_PASSWORD:}"
 
