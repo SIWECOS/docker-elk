@@ -74,7 +74,7 @@ services:
     restart: on-failure
     network_mode: host
     command:
-      - "-system.hostfs=/hostfs --dashboards"
+      - "-system.hostfs=/hostfs"
 
 volumes:
   caddy_certs:
