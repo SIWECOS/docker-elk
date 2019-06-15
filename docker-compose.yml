@@ -25,6 +25,7 @@ services:
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
       ELASTIC_PASSWORD: changeme
+      LOGSPOUT: ignore
 
   logstash:
     build:
@@ -36,6 +37,7 @@ services:
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      LOGSPOUT: ignore
 
   kibana:
     build:
@@ -44,6 +46,8 @@ services:
         ELK_VERSION: $ELK_VERSION
     volumes:
       - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+    environment:
+      LOGSPOUT: ignore
     depends_on:
       - elasticsearch
 
@@ -55,6 +59,7 @@ services:
     environment:
       ROUTE_URIS: logstash+tcp://logstash:5000
       LOGSTASH_TAGS: docker-elk
+      LOGSPOUT: ignore
     restart: on-failure
 
   metricbeat:
@@ -71,6 +76,7 @@ services:
       ELASTICSEARCH_USERNAME: elastic
       ELASTICSEARCH_PASSWORD: changeme
       KIBANA_HOST: kibana:5601
+      LOGSPOUT: ignore
     restart: on-failure
     network_mode: host
     command:
