@@ -10,3 +10,5 @@ services:
       ROUTE_URIS: logstash+tcp://logstash:5000
       LOGSTASH_TAGS: docker-elk
     restart: on-failure
+    networks:
+      - elk

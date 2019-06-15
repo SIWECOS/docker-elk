@@ -37,6 +37,8 @@ services:
     # ports:
       # - "5000:5000"
       # - "9600:9600"
+    networks:
+      - elk
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     # depends_on:
@@ -53,6 +55,10 @@ services:
     #   - "5601:5601"
     depends_on:
       - elasticsearch
+
+networks:
+  elk:
+    name: elk
 
 volumes:
   caddy_certs:
