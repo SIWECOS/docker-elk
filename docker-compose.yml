@@ -34,15 +34,8 @@ services:
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
-    # ports:
-      # - "5000:5000"
-      # - "9600:9600"
-    networks:
-      - elk
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-    # depends_on:
-    #   - elasticsearch
 
   kibana:
     build:
@@ -51,14 +44,37 @@ services:
         ELK_VERSION: $ELK_VERSION
     volumes:
       - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
-    # ports:
-    #   - "5601:5601"
     depends_on:
       - elasticsearch
 
-networks:
-  elk:
-    name: elk
+  logspout:
+    build:
+      context: logspout/
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      ROUTE_URIS: logstash+tcp://logstash:5000
+      LOGSTASH_TAGS: docker-elk
+    restart: on-failure
+
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:${ELK_VERSION}
+    user: root
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /proc:/hostfs/proc:ro
+      - /:/hostfs:ro
+      - ./metricbeat/metricbeat.docker.yml:/usr/share/metricbeat/metricbeat.yml:ro
+    environment:
+      ELASTICSEARCH_HOSTS: elasticsearch:9200
+      ELASTICSEARCH_USERNAME: elastic
+      ELASTICSEARCH_PASSWORD: changeme
+      KIBANA_HOST: kibana:5601
+    restart: on-failure
+    network_mode: host
+    command:
+      - "-system.hostfs=/hostfs --dashboards"
 
 volumes:
   caddy_certs:
