@@ -47,6 +47,7 @@ services:
         ELK_VERSION: $ELK_VERSION
     volumes:
       - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+      - kibana_data:/usr/share/kibana/data
     environment:
       LOGSPOUT: ignore
     depends_on:
@@ -86,3 +87,4 @@ services:
 volumes:
   caddy_certs:
   es_data:
+  kibana_data:
