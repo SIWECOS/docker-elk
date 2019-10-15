@@ -55,7 +55,8 @@ services:
       - elasticsearch
 
   logspout:
-    image: gliderlabs/logspout:master
+    build:
+      context: logspout/
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
@@ -64,6 +65,8 @@ services:
       LOGSPOUT: ignore
       SYSLOG_FORMAT: rfc3164
     restart: on-failure
+    depends_on:
+      - logstash
 
   metricbeat:
     image: docker.elastic.co/beats/metricbeat:${ELK_VERSION}
