@@ -19,6 +19,7 @@ services:
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - es_data:/usr/share/elasticsearch/data
+      - ./backup:/backup
     ports:
       - "9200:9200"
       - "9300:9300"
