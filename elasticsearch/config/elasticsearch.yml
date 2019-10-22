@@ -1,4 +1,8 @@
 ---
+## Backup mount paths
+## further information https://www.elastic.co/guide/en/elasticsearch/reference/7.2/modules-snapshots.html#_shared_file_system_repository
+path.repo: ["/backup"]
+
 ## Default Elasticsearch configuration from elasticsearch-docker.
 ## from https://github.com/elastic/elasticsearch-docker/blob/master/.tedi/template/elasticsearch.yml
 #
